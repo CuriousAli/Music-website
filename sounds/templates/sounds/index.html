@@ -1,2 +1,16 @@
 {% extends 'sounds/base.html' %}
 
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-dark">Добро пожаловать</h1>
+        <h4 class="fw-dark">Величие искусства, пожалуй, ярче всего проявля­ется в музыке, ибо она не имеет содержания, с кото­рым нужно считаться. Она — все формы и наполне­ния. Она делает возвышенным и благородным все, что берется выразить.</h4>
+          <h4 class="fw-dark">© И.Гёте</h4>
+          <a href="{% url 'downloadapp' %}" class="btn btn-primary my-2">Скачать приложение</a>
+          <a href="{% url 'loginpage' %}" class="btn btn-secondary my-2">Авторизаваться</a>
+        </p>
+      </div>
+    </div>
+  </section>
+{% endblock %}
