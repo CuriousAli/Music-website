@@ -17,7 +17,7 @@ class Song(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
+        return reverse('collection', kwargs={'collection_slug': self.slug})
 
     class Meta:
         ordering = ['name', 'is_published']
@@ -39,7 +39,7 @@ class Artist(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
+        return reverse('collection', kwargs={'collection_slug': self.slug})
 
 
     class Meta:
@@ -58,7 +58,7 @@ class Genre(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
+        return reverse('collection', kwargs={'collection_slug': self.slug})
 
     class Meta:
         ordering = ['name', ]
@@ -78,7 +78,7 @@ class User(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
+        return reverse('collection', kwargs={'collection_slug': self.slug})
 
 
     class Meta:

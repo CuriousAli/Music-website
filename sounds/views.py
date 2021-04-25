@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, TemplateView, CreateView
+from .forms import *
 
 from .models import *
 
@@ -9,30 +11,38 @@ menu = [
         {"title": "Главная", "url_name": "home"},
         {"title": "Музыка", "url_name": "music"},
         {"title": "Скачать", "url_name": "downloadapp"},
-        {"title": "Плейлисты", "url_name": "playlists"},
         ]
 
-class HomePage(ListView):
-    model = Song
+class HomePage(TemplateView):
     template_name = 'sounds/index.html'
-    extra_context = {'title': 'Главная страница'}
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Главная страница'
+        return context
 
 
-class Music(ListView):
-    model = Song
+class Music(TemplateView):
     template_name = 'sounds/music.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Музыка'
+        return context
 
 
 class Playlists(ListView):
     paginate_by = 3
     posts = Playlist
-    template_name = 'advertising/internet.html'
-    context_object_name = 'posts'
-    extra_context = {'title': 'Реклама в интернете'}
+    template_name = 'sounds/playlists.html'
+    context_object_name = 'collection'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = menu
+        context['title'] = 'Плейлисты'
         return context
 
     def get_queryset(self):
@@ -41,6 +51,12 @@ class Playlists(ListView):
 
 class DownloadApp(TemplateView):
     template_name = 'sounds/download_app.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Скачать приложение'
+        return context
 
 
 class TheSong(ListView):
@@ -55,5 +71,21 @@ class ThePlaylist(ListView):
 
 class LoginPage(TemplateView):
     template_name = 'sounds/login_page.html'
-    extra_context = {'title': 'Авторизация'}
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Авторизация'
+        return context
+
+
+class RegisterUser(CreateView):
+    form_class = UserCreationForm()
+    template_name = 'sounds/registration.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Регистрация'
+        return context

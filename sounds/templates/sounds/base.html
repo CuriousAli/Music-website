@@ -9,7 +9,8 @@
     <title>{{ title }}</title>
   <style type="text/css">
    BODY {
-    background: url({% static 'sounds/image/background v2.jpg' %})
+    background: url({% static 'sounds/image/background v2.jpg' %});
+    background-attachment: fixed;
    }
   </style>
 </head>
@@ -27,12 +28,26 @@
             <a class="nav-link active" aria-current="page" href="{% url m.url_name %}">{{m.title}}</a>
           </li>
         {% endfor %}
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Плейлист1</a></li>
+            <li><a class="dropdown-item" href="#">Плейлист2</a></li>
+            <li><a class="dropdown-item" href="#">Плейлист3</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
         </li>
+
+
         </ul>
       <span class="navbar-text">
-        <a class="nav-link" href="{% url 'loginpage' %}">Login</a>
+        <a class="nav-link" href="{% url 'registerpage' %}">Регистрация</a>
+        </span>
+      <span class="navbar-text">
+        <a class="nav-link" href="{% url 'loginpage' %}">Войти</a>
       </span>
     </div>
   </div>
@@ -45,7 +60,7 @@
 <footer class="text-muted py-5" style="position:fixed;left:0px;bottom:30px;height:30px; width:100%;}">
   <div class="container" align="center">
     <h6>© 2021. LuvMusic</h6>
-    <h6 class="mb-1">Для получения полного функционала, необходимо <a href="">авторизоваться</a>.</h6>
+    <h6 class="mb-1">Для получения полного функционала, необходимо <a href="{% url 'loginpage'%}">авторизоваться</a>.</h6>
     <h6 class="mb-0">В первый раз на LuvMusic? Наша политика <a href="#">конфиденциальности</a> и <a href="#">условия использования</a>.</h6>
 
   </div>
