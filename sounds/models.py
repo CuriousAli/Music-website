@@ -1,15 +1,24 @@
+import string
+import random
+
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
+
+
+
+def rand_slug():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
 
 class Song(models.Model):
     """Треки"""
     name = models.CharField("Song", max_length=150, null=False)
-    creator = models.ManyToManyField('Artist')
+    creator = models.ManyToManyField('Artist', related_name='songs')
     image = models.ImageField(upload_to="songs_images/%Y/%m/%d/", width_field=30, height_field=30, blank=True)
     album_of_song = models.ForeignKey('Album', on_delete=models.SET_NULL, null=True, blank=True)
     video = models.URLField(default=None)
-    genres = models.ManyToManyField('Genre')
+    genres = models.ManyToManyField('Genre', related_name='songs')
     slug = models.SlugField(unique=True)
     is_published = models.BooleanField(default=True)
 
@@ -17,7 +26,9 @@ class Song(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('collection', kwargs={'collection_slug': self.slug})
+        return reverse('thesong', kwargs={'slug': self.slug})
+
+
 
     class Meta:
         ordering = ['name', 'is_published']
@@ -25,11 +36,9 @@ class Song(models.Model):
         verbose_name_plural = "Песни"
 
 
-
 class Artist(models.Model):
     """Исполнители"""
     name = models.CharField("Исполнитель", max_length=150, unique=True)
-    song_list = models.ManyToManyField('Song', blank=True)
     albums = models.ForeignKey('Album', on_delete=models.SET_NULL, null=True, blank=True)
     birth_date = models.DateField(default=None)
     bio = models.TextField("Описание")
@@ -91,15 +100,19 @@ class User(models.Model):
 class Playlist(models.Model):
     """Личный плейлист у пользователя"""
     name = models.CharField("Название плейлиста", max_length=150)
-    song = models.ManyToManyField('Song')
-    creator = models.ForeignKey('User', on_delete=models.CASCADE)
-    slug = models.SlugField(unique=True)
+    song = models.ManyToManyField('Song', null=True, blank=True, related_name='playlists')
+    slug = models.SlugField("Слаг", unique=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(rand_slug() + "-" + self.name)
+        super(Playlist, self).save(*args, **kwargs)
 
 
     class Meta:
@@ -111,7 +124,6 @@ class Playlist(models.Model):
 class Album(models.Model):
     """Альбом содержащий треки"""
     name = models.CharField("Название альбома", max_length=150)
-    songs = models.ManyToManyField('Song')
     creator = models.ForeignKey('Artist', on_delete=models.SET_DEFAULT, default=None)
     slug = models.SlugField(unique=True)
     release_date = models.DateField()

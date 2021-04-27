@@ -1,91 +1,96 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, CreateView
+from django.views.generic import ListView, TemplateView, CreateView, DetailView
+
 from .forms import *
-
 from .models import *
+from .utils import *
 
 
-menu = [
-        {"title": "Главная", "url_name": "home"},
-        {"title": "Музыка", "url_name": "music"},
-        {"title": "Скачать", "url_name": "downloadapp"},
-        ]
-
-class HomePage(TemplateView):
+class HomePage(DataMixin, TemplateView):
     template_name = 'sounds/index.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Главная страница'
-        return context
+        c_def = self.get_user_context(title='Главная страница')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class Music(TemplateView):
+class Music(DataMixin, TemplateView):
     template_name = 'sounds/music.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Музыка'
-        return context
+        c_def = self.get_user_context(title='Музыка')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class Playlists(ListView):
-    paginate_by = 3
-    posts = Playlist
-    template_name = 'sounds/playlists.html'
-    context_object_name = 'collection'
+class Create_Playlist(LoginRequiredMixin, DataMixin, CreateView):
+    form_class = PlaylistCreationForm
+    template_name = 'sounds/create_playlists.html'
+    context_object_name = 'playlist'
+    login_url = '/login/'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Плейлисты'
-        return context
-
-    def get_queryset(self):
-        return Playlist.objects.filter()
+        c_def = self.get_user_context(title='Плейлисты')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class DownloadApp(TemplateView):
+class DownloadApp(DataMixin, TemplateView):
     template_name = 'sounds/download_app.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Скачать приложение'
-        return context
+        c_def = self.get_user_context(title='Скачать приложение')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class TheSong(ListView):
+class TheSong(DataMixin, DetailView):
+    model = Song
+    template_name = 'sounds/thesong.html'
+    context_object_name = 'tune'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Песня")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class TheArtist(DataMixin, DetailView):
     pass
 
-
-class TheArtist(ListView):
+class ThePlaylist(DataMixin, DetailView):
     pass
 
-class ThePlaylist(ListView):
-    pass
-
-class LoginPage(TemplateView):
+class LoginPage(DataMixin, TemplateView):
     template_name = 'sounds/login_page.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Авторизация'
-        return context
+        c_def = self.get_user_context(title='Авторизация')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class RegisterUser(CreateView):
+class RegisterUser(DataMixin, CreateView):
     form_class = UserCreationForm()
     template_name = 'sounds/registration.html'
     success_url = reverse_lazy('login')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Регистрация'
-        return context
+        c_def = self.get_user_context(title='Регистрация')
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class Playlist_of_User(DataMixin, ListView):
+    template_name = 'sounds/playlist_of_user.html'
+    model = User.objects.filter()
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Регистрация')
+        return dict(list(context.items()) + list(c_def.items()))

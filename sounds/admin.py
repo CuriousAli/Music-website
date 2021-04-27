@@ -33,9 +33,9 @@ class GenreAdmin(admin.ModelAdmin):
 @admin.register(Playlist)
 class PlaylistAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ("id", "name", "creator")
+    list_display = ("id", "name", )
     list_display_links = ("name",)
-    search_fields = ("name", "creator__name")
+    search_fields = ("name",)
 
 
 @admin.register(Album)
