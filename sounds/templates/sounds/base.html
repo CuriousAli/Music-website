@@ -28,12 +28,14 @@
             <a class="nav-link active" aria-current="page" href="{% url m.url_name %}">{{m.title}}</a>
           </li>
         {% endfor %}
-
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-4" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+
       <span class="navbar-text">
         <a class="nav-link" href="{% url 'loginpage' %}">Войти</a>
       </span>

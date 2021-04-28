@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import *
 
 
-
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
@@ -36,7 +35,4 @@ class AlbumAdmin(admin.ModelAdmin):
     list_display_links = ("name",)
     list_filter = ("release_date", "name")
     search_fields = ("name", "creator__name")
-
-
-
 

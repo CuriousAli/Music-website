@@ -27,6 +27,16 @@ class Music(DataMixin, TemplateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
+class Surprise(LoginRequiredMixin, DataMixin, TemplateView):
+    template_name = 'sounds/surprise.html'
+    context_object_name = 'playlist'
+    login_url = '/login/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Плейлисты')
+        return dict(list(context.items()) + list(c_def.items()))
+
 
 class DownloadApp(DataMixin, TemplateView):
     template_name = 'sounds/download_app.html'
@@ -69,13 +79,4 @@ class RegisterUser(DataMixin, CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Регистрация')
-        return dict(list(context.items()) + list(c_def.items()))
-
-
-class TestLoggedin(DataMixin, TemplateView):
-    template_name = 'sounds/test_login.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Пасхалка')
         return dict(list(context.items()) + list(c_def.items()))

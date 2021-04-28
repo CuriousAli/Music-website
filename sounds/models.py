@@ -7,6 +7,10 @@ from django.utils.text import slugify
 
 
 
+def rand_slug():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
+
+
 class Song(models.Model):
     """Треки"""
     name = models.CharField("Song", max_length=150, null=False)
@@ -23,7 +27,6 @@ class Song(models.Model):
 
     def get_absolute_url(self):
         return reverse('thesong', kwargs={'slug': self.slug})
-
 
 
     class Meta:
