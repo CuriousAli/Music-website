@@ -7,10 +7,6 @@ from django.utils.text import slugify
 
 
 
-def rand_slug():
-    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
-
-
 class Song(models.Model):
     """Треки"""
     name = models.CharField("Song", max_length=150, null=False)
@@ -73,52 +69,6 @@ class Genre(models.Model):
         ordering = ['name', ]
         verbose_name = "Жанр"
         verbose_name_plural = "Жанры"
-
-
-class User(models.Model):
-    """Пользователи"""
-    name = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(null=False, unique=True)
-    photo = models.ImageField(upload_to="avatars/%Y/%m/%d/", width_field=30, height_field=30, blank=True)
-    own_playlist = models.ManyToManyField('Playlist', blank=True)
-    slug = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('collection', kwargs={'collection_slug': self.slug})
-
-
-    class Meta:
-        ordering = ['name', ]
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
-
-
-
-class Playlist(models.Model):
-    """Личный плейлист у пользователя"""
-    name = models.CharField("Название плейлиста", max_length=150)
-    song = models.ManyToManyField('Song', null=True, blank=True, related_name='playlists')
-    slug = models.SlugField("Слаг", unique=True)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(rand_slug() + "-" + self.name)
-        super(Playlist, self).save(*args, **kwargs)
-
-
-    class Meta:
-        ordering = ['name', ]
-        verbose_name = "Плейлист"
-        verbose_name_plural = "Плейлисты"
 
 
 class Album(models.Model):

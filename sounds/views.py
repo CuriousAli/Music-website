@@ -27,17 +27,6 @@ class Music(DataMixin, TemplateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class Create_Playlist(LoginRequiredMixin, DataMixin, CreateView):
-    form_class = PlaylistCreationForm
-    template_name = 'sounds/create_playlists.html'
-    context_object_name = 'playlist'
-    login_url = '/login/'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Плейлисты')
-        return dict(list(context.items()) + list(c_def.items()))
-
 
 class DownloadApp(DataMixin, TemplateView):
     template_name = 'sounds/download_app.html'
@@ -62,8 +51,6 @@ class TheSong(DataMixin, DetailView):
 class TheArtist(DataMixin, DetailView):
     pass
 
-class ThePlaylist(DataMixin, DetailView):
-    pass
 
 class LoginPage(DataMixin, TemplateView):
     template_name = 'sounds/login_page.html'
@@ -85,12 +72,10 @@ class RegisterUser(DataMixin, CreateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class Playlist_of_User(DataMixin, ListView):
-    template_name = 'sounds/playlist_of_user.html'
-    model = User.objects.filter()
-
+class TestLoggedin(DataMixin, TemplateView):
+    template_name = 'sounds/test_login.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Регистрация')
+        c_def = self.get_user_context(title='Пасхалка')
         return dict(list(context.items()) + list(c_def.items()))

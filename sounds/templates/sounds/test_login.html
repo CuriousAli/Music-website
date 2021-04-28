@@ -1,0 +1,15 @@
+{% extends 'sounds/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="px-4 pt-5 my-5 text-center ">
+  <h1 class="display-4 fw-bold mb-5">Picture is clickable! try it ;)</h1>
+    <div class="overflow-hidden" style="max-height: 30vh;">
+    <div class="container px-5">
+      <a href="https://youtu.be/dQw4w9WgXcQ?t=39" ><img src="{% static 'sounds/image/Rick Astley.gif' %}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="400" height="500" loading="lazy"></a>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

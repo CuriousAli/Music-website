@@ -29,15 +29,6 @@ class GenreAdmin(admin.ModelAdmin):
     list_filter = ("name",)
 
 
-
-@admin.register(Playlist)
-class PlaylistAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
-    list_display = ("id", "name", )
-    list_display_links = ("name",)
-    search_fields = ("name",)
-
-
 @admin.register(Album)
 class AlbumAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
@@ -47,10 +38,5 @@ class AlbumAdmin(admin.ModelAdmin):
     search_fields = ("name", "creator__name")
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
-    list_display = ("id", "name", "email")
-    list_display_links = ("name", "email")
-    search_fields = ("name", "email")
+
 
