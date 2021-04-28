@@ -9,5 +9,6 @@ urlpatterns = [
     path('the-song/<slug:slug>/', TheSong.as_view(), name='thesong'),
     path('', TheArtist.as_view(), name='theartist'),
     path('login/', LoginPage.as_view(), name='loginpage'),
+    path('logout/', logout_user, name='logout'),
     path('register/', RegisterUser.as_view(), name='registerpage'),
 ]

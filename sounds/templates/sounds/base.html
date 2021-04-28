@@ -35,13 +35,12 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
 
-
-      <span class="navbar-text">
-        <a class="nav-link" href="{% url 'loginpage' %}">Войти</a>
-      </span>
-      <span class="navbar-text">
-        <a class="nav-link" href="{% url 'registerpage' %}">Регистрация</a>
+      {% for lm in last_menu %}
+        <span class="navbar-text">
+          <a class="nav-link" href="{% url lm.url_name %}">{{lm.title}}</a>
         </span>
+      {% endfor %}
+
     </div>
   </div>
 </nav>

@@ -1,10 +1,15 @@
 from .models import *
 
 menu = [
-    {"title": "Главная", "url_name": "home"},
-    {"title": "Музыка", "url_name": "music"},
-    {"title": "Скачать", "url_name": "downloadapp"},
-    {"title": "Зайди сюда", "url_name": "surprise"},
+        {"title": "Главная", "url_name": "home"},
+        {"title": "Музыка", "url_name": "music"},
+        {"title": "Скачать", "url_name": "downloadapp"},
+        {"title": "Зайди сюда", "url_name": "surprise"},
+]
+
+a_menu = [
+        {"title": "Войти", "url_name": "loginpage"},
+        {"title": "Регистрация", "url_name": "registerpage"},
 ]
 
 
@@ -16,6 +21,14 @@ class DataMixin:
         if not self.request.user.is_authenticated:
             user_menu.pop(3)
 
+        auth_menu = a_menu.copy()
+        if self.request.user.is_authenticated:
+            auth_menu.clear()
+            auth_menu = [
+                    {"title": "Выйти", "url_name": "logout"},
+            ]
+
         context['menu'] = user_menu
+        context['last_menu'] = auth_menu
         return context
 

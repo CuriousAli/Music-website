@@ -8,7 +8,9 @@
         <h4 class="fw-dark">Величие искусства, пожалуй, ярче всего проявля­ется в музыке, ибо она не имеет содержания, с кото­рым нужно считаться. Она — все формы и наполне­ния. Она делает возвышенным и благородным все, что берется выразить.</h4>
           <h4 class="fw-dark">© И.Гёте</h4>
           <a href="{% url 'downloadapp' %}" class="btn btn-primary my-2">Наше приложение</a>
-          <a href="{% url 'loginpage' %}" class="btn btn-secondary my-2">Авторизаваться</a>
+          {% if not request.user.is_authenticated %}
+            <a href="{% url 'loginpage' %}" class="btn btn-secondary my-2">Авторизаваться</a>
+          {% endif %}
         </p>
       </div>
     </div>

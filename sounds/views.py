@@ -1,6 +1,9 @@
+from django.contrib.auth import logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, CreateView, DetailView
 
@@ -62,8 +65,12 @@ class TheArtist(DataMixin, DetailView):
     pass
 
 
-class LoginPage(DataMixin, TemplateView):
+class LoginPage(DataMixin, LoginView):
+    form_class = AuthenticationForm
     template_name = 'sounds/login_page.html'
+
+    def get_success_url(self):
+        return reverse_lazy('surprise')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,7 +79,7 @@ class LoginPage(DataMixin, TemplateView):
 
 
 class RegisterUser(DataMixin, CreateView):
-    form_class = UserCreationForm()
+    form_class = RegisterUserForm
     template_name = 'sounds/registration.html'
     success_url = reverse_lazy('login')
 
@@ -80,3 +87,8 @@ class RegisterUser(DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Регистрация')
         return dict(list(context.items()) + list(c_def.items()))
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('loginpage')
