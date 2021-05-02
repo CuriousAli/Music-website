@@ -1,0 +1,30 @@
+{#{% extends "account/base.html" %}#}
+{% extends "sounds/base.html" %}
+
+{% load i18n %}
+
+
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+  <div class="col-lg-6 mx-auto">
+<h1>{% trans "Создать аккаунт" %}</h1>
+
+<h4 class="mb-4">{% blocktrans %}Уже есть аккаунт? Тогда Вам сюда <a href="{{ login_url }}">войти</a>.{% endblocktrans %}</h4>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {% for f in form %}
+  <h5  class="mb-3" ><label class="form-label" for="{{ f.id_for_label }}" >{{f.label}}: </label>{{ f }}</h5>
+  <div class="form-error">{{ f.errors }}</div>
+  {% endfor %}
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="w-15 btn btn-primary" type="submit">{% trans "Регистрация" %} &raquo;</button>
+</form>
+  </div>
+</div>
+
+{% endblock %}

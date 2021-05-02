@@ -7,10 +7,11 @@ from .models import *
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Имя пользователя')
-    password1 = forms.CharField(label='Пароль')
-    password2 = forms.CharField(label='Повторите пароль')
+    email = forms.EmailField(label='Эл.почта', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(label='Имя пользователя',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2')
+        fields = ['email', 'username', 'password1', 'password2']

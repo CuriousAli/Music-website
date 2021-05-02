@@ -1,0 +1,18 @@
+{% extends 'sounds/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+      <form class="position-absolute top-50 start-50 translate-middle" method="post" action="{% url 'registerpage' %}">
+          {% csrf_token %}
+          {% for f in form %}
+          <p><label class="form-label" for="{{f.id_for_label}}">{{f.label}}:</label>{{f}}</p>
+          <div class="form-error">{{ f.error }}</div>
+          {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+
+{% endblock %}

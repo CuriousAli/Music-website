@@ -1,0 +1,26 @@
+{#{% extends "account/base.html" %}#}
+{% extends "sounds/base.html" %}
+
+{% load i18n %}
+
+
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+  <div class="col-lg-6 mx-auto">
+<h1>{% trans "Выход из аккаунта" %}</h1>
+
+<h4 class="mb-4">{% trans 'Действительно хотите выйти?' %}</h4>
+
+<form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  <button class="w-25 btn btn-primary" type="submit">{% trans 'Выйти' %}</button>
+</form>
+  </div>
+</div>
+
+
+{% endblock %}

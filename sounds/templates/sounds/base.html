@@ -32,7 +32,7 @@
 
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
 
       {% for lm in last_menu %}
@@ -52,7 +52,7 @@
 <footer class="text-muted py-5" style="position:fixed;left:0px;bottom:30px;height:30px; width:100%;}">
   <div class="container" align="center">
     <h6>© 2021. LuvMusic</h6>
-    <h6 class="mb-1">Для получения полного функционала, необходимо <a href="{% url 'loginpage'%}">авторизоваться</a>.</h6>
+    <h6 class="mb-1">Для получения полного функционала, необходимо <a href="{% url 'account_login'%}">авторизоваться</a>.</h6>
     <h6 class="mb-0">В первый раз на LuvMusic? Наша политика <a href="#">конфиденциальности</a> и <a href="#">условия использования</a>.</h6>
 
   </div>
