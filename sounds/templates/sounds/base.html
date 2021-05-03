@@ -30,9 +30,9 @@
         {% endfor %}
         </ul>
 
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Поиск</button>
+      <form class="d-flex" method="get" action="{% url 'search' %}">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success" type="submit" >Поиск</button>
       </form>
 
       {% for lm in last_menu %}

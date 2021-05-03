@@ -28,4 +28,3 @@ class DataMixin:
         context['menu'] = user_menu
         context['last_menu'] = auth_menu
         return context
-

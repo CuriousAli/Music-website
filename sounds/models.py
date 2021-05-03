@@ -1,14 +1,5 @@
-import string
-import random
-
 from django.db import models
 from django.urls import reverse
-from django.utils.text import slugify
-
-
-
-def rand_slug():
-    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
 
 class Song(models.Model):
@@ -22,11 +13,12 @@ class Song(models.Model):
     slug = models.SlugField(unique=True)
     is_published = models.BooleanField(default=True)
 
+
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
     def get_absolute_url(self):
-        return reverse('thesong', kwargs={'slug': self.slug})
+        return reverse('search/?q=', kwargs={'slug': self.slug})
 
 
     class Meta:
@@ -42,6 +34,7 @@ class Artist(models.Model):
     birth_date = models.DateField(default=None)
     bio = models.TextField("Описание")
     slug = models.SlugField(unique=True)
+
 
     def __str__(self):
         return self.name
@@ -62,6 +55,7 @@ class Genre(models.Model):
     description = models.TextField("Описание")
     slug = models.SlugField(unique=True)
 
+
     def __str__(self):
         return self.name
 
@@ -80,6 +74,7 @@ class Album(models.Model):
     creator = models.ForeignKey('Artist', on_delete=models.SET_DEFAULT, default=None)
     slug = models.SlugField(unique=True)
     release_date = models.DateField()
+
 
     def __str__(self):
         return self.name

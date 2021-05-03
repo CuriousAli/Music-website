@@ -3,19 +3,19 @@
 
 {% block content %}
     <div class="px-4 py-5 my-5 text-center">
-        <img class="d-block mx-auto mb-4" src="{% static 'sounds/image/saxophone.png' %}" alt="" width="72" height="72">
-        <h1 class="display-5 fw-bold">Ищите свои любимые треки!</h1>
-        <div class="col-lg-8 mx-auto">
-            <p class="lead mb-5">.</p>
+        <div class="col-lg-3 mx-auto">
+            <h1 class="display-5 fw-bold mb-5">Результаты поиска:</h1>
+        {% if looking_for %}
+        {% for el in looking_for %}
+            <div class="list-group">
+                <a href="#" class="w-15 list-group-item list-group-item-action mb-3" >{{ el }}</a>
+            </div>
+        {% endfor %}
 
-            <div class="container-fluid ">
-                <form class="d-flex ">
-                    <input class="form-control me-1 w-25 " type="search" placeholder="Поиск песен" aria-label="Search" >
-                    <button class="w-15 btn btn-primary btn-lg" type="submit">Искать</button>
-                </form>
+        {% else %}
+        <h1>Nichego ne naideno</h1>
 
-          </div>
-        </div>
-    </div>
-
+        {% endif %}
+  </div>
+</div>
 {% endblock %}
