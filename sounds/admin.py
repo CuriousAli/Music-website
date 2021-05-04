@@ -5,7 +5,7 @@ from .models import *
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ("id", "name", "album_of_song", "is_published")
+    list_display = ("id", "name",  "album_of_song", "is_published")
     list_display_links = ("name",)
     list_filter = ("genres", "is_published")
     search_fields = ("name", "creator__name")

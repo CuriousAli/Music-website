@@ -6,7 +6,7 @@ class Song(models.Model):
     """Треки"""
     name = models.CharField("Song", max_length=150, null=False)
     creator = models.ManyToManyField('Artist', related_name='songs')
-    image = models.ImageField(upload_to="songs_images/%Y/%m/%d/", width_field=30, height_field=30, blank=True)
+    image = models.ImageField(upload_to="songs_images/%Y/%m/%d/", blank=True)
     album_of_song = models.ForeignKey('Album', on_delete=models.SET_NULL, null=True, blank=True)
     video = models.URLField(default=None)
     genres = models.ManyToManyField('Genre', related_name='songs')
@@ -18,7 +18,7 @@ class Song(models.Model):
         return f"{self.name}"
 
     def get_absolute_url(self):
-        return reverse('search/?q=', kwargs={'slug': self.slug})
+        return reverse('song', kwargs={'slug': self.slug})
 
 
     class Meta:

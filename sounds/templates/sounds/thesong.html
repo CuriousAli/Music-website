@@ -1,5 +1,32 @@
 {% extends 'sounds/base.html' %}
 
-{% block content %}]
+{% block content %}
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    {% if song.image %}
+      <div class="px-4 py-5 my-1 text-left">
+        <img class="d-block mx-auto mb-3" src="{{song.image.url}}" alt="" width="72" height="57">
+      </div>
+    {% endif %}
+
+    <div class="col-10 col-sm-8 col-lg-6">
+      <iframe width="700" height="500" src="{{ song.video }}"></iframe>
+    </div>
+
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold lh-1 mb-3">{{ song.name }}</h1>
+      <h4>{{song.creator}}</h4>
+
+      {% if song.genres  %}
+      <h4>{{song.album}}</h4>
+      {% endif %}
+
+      {% if song.genres  %}
+      <h4>{{song.genres}}</h4>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
 
 {% endblock %}

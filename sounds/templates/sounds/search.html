@@ -6,11 +6,11 @@
         <div class="col-lg-3 mx-auto">
             <h1 class="display-5 fw-bold mb-5">Результаты поиска:</h1>
         {% if looking_for %}
-        {% for el in looking_for %}
-            <div class="list-group">
-                <a href="#" class="w-15 list-group-item list-group-item-action mb-3" >{{ el }}</a>
-            </div>
-        {% endfor %}
+            {% for el in looking_for %}
+                <div class="list-group">
+                    <a href="{% url 'detailpage' el.slug %}" class="w-15 list-group-item list-group-item-action mb-3" >{{ el }}</a>
+                </div>
+            {% endfor %}
 
         {% else %}
         <h1>Nichego ne naideno</h1>
