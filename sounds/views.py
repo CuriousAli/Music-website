@@ -19,7 +19,7 @@ class HomePage(DataMixin, TemplateView):
 class SearchResult(DataMixin, ListView):
     model = Song
     template_name = 'sounds/search.html'
-    paginate_by = 3
+    #paginate_by = 5
     context_object_name = 'looking_for'
 
     def get_queryset(self):
